@@ -13,18 +13,14 @@ const getMovies = (req, res) => {
 
 const getMovieById = (req, res) => {
   const id = parseInt(req.params.id);
-  database.query(
-    "SELECT * FROM `movies` WHERE `id` = ?",
-    [id],
-    (err, results) => {
-      const movie = results.find((movie) => movie.id === id);
-      if (movie != null) {
-        res.json(movie);
-      } else {
-        res.status(404).send("Not Found");
-      }
+  db.query("SELECT * FROM `movies` WHERE `id` = ?", [id], (err, results) => {
+    const movie = results.find((movie) => movie.id === id);
+    if (movie != null) {
+      res.json(movie);
+    } else {
+      res.status(404).send("Not Found");
     }
-  );
+  });
 };
 
 const postMovie = async (req, res) => {
@@ -47,7 +43,7 @@ const postMovie = async (req, res) => {
 const updateMovie = (req, res) => {
   const id = parseInt(req.params.id);
   const { title, director, year, color, duration } = req.body;
-  database.query(
+  db.query(
     "UPDATE `movies` SET `title` = ?, `director` = ?, `year` = ?, `color` = ?, `duration` = ? WHERE `id` = ?",
     [title, director, year, color, duration, id],
     (err, results) => {
@@ -62,17 +58,13 @@ const updateMovie = (req, res) => {
 
 const deleteMovie = (req, res) => {
   const id = parseInt(req.params.id);
-  database.query(
-    "DELETE FROM `movies` WHERE `id` = ?",
-    [id],
-    (err, results) => {
-      if (err) {
-        res.status(422).send(err);
-      } else {
-        res.status(200).send("Movie deleted successfully");
-      }
+  db.query("DELETE FROM `movies` WHERE `id` = ?", [id], (err, results) => {
+    if (err) {
+      res.status(422).send(err);
+    } else {
+      res.status(200).send("Movie deleted successfully");
     }
-  );
+  });
 };
 
 module.exports = {
