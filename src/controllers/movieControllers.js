@@ -1,7 +1,7 @@
-const database = require("../../database");
+const db = require("../../database");
 
 const getMovies = (req, res) => {
-  database.query("SELECT * FROM `movies`", (err, results) => {
+  db.query("SELECT * FROM `movies`", (err, results) => {
     if (err) {
       console.error(err);
       return res.sendStatus(500);
@@ -28,7 +28,6 @@ const getMovieById = (req, res) => {
 };
 
 const postMovie = async (req, res) => {
-  console.log(req.body);
   res.send("Post route is working 🎉");
   const { title, director, year, color, duration } = req.body;
 
