@@ -28,7 +28,7 @@ const postMovie = async (req, res) => {
   const { title, director, year, color, duration } = req.body;
 
   try {
-    const [result] = await database.query(
+    const [result] = await db.query(
       "INSERT INTO movies(title, director, year, color, duration) VALUES (?, ?, ?, ?, ?)",
       [title, director, year, color, duration]
     );

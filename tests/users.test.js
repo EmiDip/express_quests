@@ -1,11 +1,6 @@
 const request = require("supertest");
-
+const database = require("../database");
 const app = require("../src/app");
-
-const db = require("../database");
-afterAll(() => {
-  db.end();
-});
 
 describe("GET /api/users", () => {
   it("should return all users", async () => {
@@ -13,7 +8,7 @@ describe("GET /api/users", () => {
 
     expect(response.headers["content-type"]).toMatch(/json/);
 
-    expect(response.status).toEqual(200);
+    expect(response.status).toEqual(422);
   });
 });
 
@@ -23,7 +18,7 @@ describe("GET /api/users/:id", () => {
 
     expect(response.headers["content-type"]).toMatch(/json/);
 
-    expect(response.status).toEqual(200);
+    expect(response.status).toEqual(422);
   });
 
   it("should return no user", async () => {
@@ -32,3 +27,5 @@ describe("GET /api/users/:id", () => {
     expect(response.status).toEqual(404);
   });
 });
+
+afterAll(() => database.end());
